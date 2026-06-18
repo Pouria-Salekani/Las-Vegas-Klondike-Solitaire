@@ -1,0 +1,15 @@
+.venv/
+__pycache__/
+*.pyc
+.vscode/
+
+to_do.txt
+code_for_solit.txt
+dio.py
+ihie.py
+just_incase.txt
+just_test.py
+mcts.py
+node.py
+pre_mcts_code.py
+test_graph.py

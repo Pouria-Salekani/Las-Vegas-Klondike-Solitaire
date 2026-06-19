@@ -6,14 +6,14 @@ from piles import Pile
 from mcts import MCTS
 from solit_play import Solitaire
 
-RUNS = 1000
+RUNS = 1
 
 distribution = {k: 0 for k in range(0, 261, 5)}
 break_even = 0
 wins = 0
 total_payout = 0
 
-for _ in range(RUNS):
+for i in range(RUNS):
     p = Pile()
     solitaire = Solitaire(p)
     solitaire.simulate()
@@ -21,6 +21,32 @@ for _ in range(RUNS):
     payout = solitaire.money_made
     distribution[payout] += 1
     total_payout += payout
+
+    for k, v in solitaire.print_values.items():
+        if i == 0:
+            print()
+        print(f'MOVE {k}')
+        for vals in v:
+            print(vals, '\n')
+        print('---------------------------------------------------------------------------------------------------------------------------------------')
+
+
+    if 200 <= solitaire.money_made <= 255:
+        print(" hit ", solitaire.money_made, "  again...")
+        print('foundation ', solitaire.pile.foundation)
+        print('pilea ', solitaire.pile.piles)
+        print(solitaire.pile.waste, '|||||', solitaire.pile.deck)
+        print('\n')
+
+
+    #this is to print out every legal move and see what it does
+    if solitaire.money_made == 260:
+        for k, v in solitaire.print_values.items():
+            print(f'MOVE {k} -->')
+            for vals in v:
+                print(vals, '\n')
+            print('---------------------------------------------------------------------------------------------------------------------------------------')
+
 
     if payout >= 52:
         break_even += 1

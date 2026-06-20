@@ -1,13 +1,10 @@
 from card import Card
 from collections import deque, defaultdict
-# from piles import Pile  #new
 
 class Solitaire:
     def __init__(self, pile_instance) -> None:
 
         self.pile = pile_instance
-        #NEW#
-        #self.pile = Pile()
         self.money_made = 0     # each card in foundation is $5
         self.moves_made = 0
         
@@ -181,7 +178,6 @@ class Solitaire:
 
                     self.flip_card(key)
                     can_play = True
-                    #had {v}
                     self.moves_made += 1
                     self.record_moves(f'Moved {k} from pile {key} into the {k.suit_value()} foundation pile ({self.pile.foundation})')
 
@@ -220,7 +216,6 @@ class Solitaire:
                     self.ace_spades_count += 1
 
               
-                #had {xj} next to ace card
                 self.moves_made += 1
                 can_play = True
                 self.record_moves(f'[FROM WASTE], moved {ace_card} into the {ace_suit} foundation pile')
@@ -266,6 +261,7 @@ class Solitaire:
                         self.moves_made += 1
                         self.record_moves(f'[FROM WASTE], moved {waste_card} into the {self.pile.piles[k]} --- {self.make_nice_number(k)} pile')
                         can_play = True
+        
         self.pile.flip_thru()   # restock
         return can_play
         
@@ -307,7 +303,6 @@ class Solitaire:
                     self.moves_made += 1
                     self.record_moves(f'[GENERAL SPLIT DECK/LEAVES an empty pile], moved {cur_p_card_ls} from {self.make_nice_number(cur_pile)} pile to {self.make_nice_number(start_pile)} pile')
                     can_play = True
-                    #return True
                 
                 # priority 2
                 elif self.check_card_for_pile(start_card_info, cur_p_card_ls) and not cur_p_face and start_card_face:
@@ -319,7 +314,7 @@ class Solitaire:
                     self.moves_made += 1
                     self.record_moves(f'[GENERAL SPLIT DECK/REVEALS a card], moved {cur_p_card_ls} from {self.make_nice_number(cur_pile)} pile to {self.make_nice_number(start_pile)} pile')
                     can_play = True
-                    #return True
+
                 # priority 3
                 elif self.check_card_for_pile(cur_card_info, start_s_card_ls) and cur_card_face and (len(self.pile.piles[start_pile]) - len(start_s_card_ls) < len(self.pile.piles[cur_pile]) + len(start_s_card_ls)):
                     if self.pile.piles[start_pile]:     # just in-case
@@ -333,8 +328,7 @@ class Solitaire:
                     can_play = True
                     self.moves_made += 1
                     self.record_moves(f'[GENERAL SPLIT DECK/general], moved {start_s_card_ls} from {self.make_nice_number(start_pile)} pile to {self.make_nice_number(cur_pile)} pile')
-                    #return True
-        #return False
+        
         return can_play
 
 
@@ -355,54 +349,29 @@ class Solitaire:
 
                 c_pile_selected_cards, c_index = self.select_cards(cur_pile)
                 cur_p_card_ls = list(c_pile_selected_cards) #SHOWS THE SUBSET thats starts of as TRUE i.e. face up
-                print('cur ls', cur_p_card_ls)
-                print(self.pile.piles[start_pile], '----',self.pile.piles[cur_pile])
                 cur_p_rank,cur_p_suit, cur_p_face = Card.decipher_hash(cur_p_card_ls[0])
                 
-                #print('ranks and all')
-                #print(cur_p_rank, cur_p_suit, cur_p_face)
+                
+                #this is how we stop the infinite cycle of moving onto an empty pile
+                    #cur_p_card_ls is a SUBSET of piles[cur_pile], where the subset is the FIRST INSTANCE all cards are FACE UP (true)
+                    #so, if == 0, then all cards face up, we don't need to move them. This prevents the infinite cycle
                 hidden_cards_in_pile = len(self.pile.piles[cur_pile]) - len(cur_p_card_ls)
                 if hidden_cards_in_pile == 0:
                     continue
-
-                frozen_sets = [frozenset(card.items()) for card in cur_p_card_ls]
-                card_tuple = tuple(frozen_sets)
-
-                # if card_tuple in self.seen and not self.seen[card_tuple]:
-                #     continue  # Skip this move, as it has been seen and determined to be invalid
 
 
                 if cur_p_face and cur_p_rank == 'K':
                     move_to_start_pile = self.remove_cards(cur_pile, cur_p_card_ls)
                     self.pile.piles[start_pile].extend(move_to_start_pile)
                     self.flip_card(cur_pile)
-                    #self.seen[card_tuple] = False
 
                     can_play = True
                     self.moves_made += 1
                     self.record_moves(f'[!SPECIAL! SPLIT DECK], moved {cur_p_card_ls} from {self.make_nice_number(cur_pile)} pile to {self.make_nice_number(start_pile)} pile')
-                    #return True
 
-                
-
-                # if not self.pile.piles[start_pile] and len(self.pile.piles[cur_pile]) >= 2:
-                #     move_to_start_pile = self.remove_cards(cur_pile, cur_p_card_ls)
-                #     self.pile.piles[start_pile].extend(move_to_start_pile)
-                #     self.flip_card(cur_pile)
-                #     self.seen[card_tuple] = False
-
-                #     can_play = True
-                #     self.moves_made += 1
-                #     self.record_moves(f'[!SPECIAL! SPLIT DECK], moved {cur_p_card_ls} from {self.make_nice_number(cur_pile)} pile to {self.make_nice_number(start_pile)} pile')
-        #return False
         return can_play      
 
     def foundation_count(self):
-        # for suits in self.pile.foundation:
-        #     #self.money_made += len(self.pile.foundation[suits]) * 5 if self.pile.foundation else 0
-        #     self.money_made = 
-        #     sum(len(self.pile.foundation[suits]) for suits in )
-
         self.money_made = sum(len(self.pile.foundation[suits]) * 5 for suits in self.pile.foundation)
 
         return self.money_made

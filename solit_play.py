@@ -6,7 +6,7 @@ class Solitaire:
 
         self.pile = pile_instance
         self.money_made = 0     # each card in foundation is $5
-        self.moves_made = 0
+        self.moves_made = -1
         
 
         self.ace_spades_count = 0
@@ -395,14 +395,13 @@ class Solitaire:
     def simulate(self):
         #called in order of priority
         self.moves_made += 1
-        self.record_moves(f'{self.pile.piles}')
+        #self.record_moves(f'{self.pile.piles}')
         
 
         foundation = self.pile_to_foundation()
         waste = self.waste_to_pile()
         split = self.split_deck()
         special_split = self.special_split_deck()       
-        print('SPECPAL SPLT ', special_split)
         
         # UNCOMMENT IF THE ABOVE DOESNT MAKE SENSE
         # cards_left = self.count_pile()
@@ -424,7 +423,7 @@ class Solitaire:
             print('----------------------------------------------------------------')
             print('END FOUNDTATION ', self.pile.foundation)
             print('----------------------------------------------------------------')
-            print('Total moves made ', self.moves_made)
+            print('Total moves made ', self.moves_made - 1)
             print('Total cards remaining (the higher, the worse)', len(self.pile.waste) + self.count_pile() + len(self.pile.stock))
             #self.record_moves(f'FINAL {self.pile.piles}') this is the final pile but we already print it
             #self.foundation_count()

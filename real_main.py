@@ -1,12 +1,8 @@
-
-# from solit_play import Solitaire 
 import matplotlib.pyplot as plt
-import numpy as np
 from piles import Pile
-from mcts import MCTS
 from solit_play import Solitaire
 
-RUNS = 1
+RUNS = 1000
 
 distribution = {k: 0 for k in range(0, 261, 5)}
 break_even = 0
@@ -18,9 +14,6 @@ for i in range(RUNS):
     solitaire = Solitaire(p)
     solitaire.simulate()
 
-    payout = solitaire.money_made
-    distribution[payout] += 1
-    total_payout += payout
 
     for k, v in solitaire.print_values.items():
         if i == 0:
@@ -29,7 +22,6 @@ for i in range(RUNS):
         for vals in v:
             print(vals, '\n')
         print('---------------------------------------------------------------------------------------------------------------------------------------')
-
 
     if 200 <= solitaire.money_made <= 255:
         print(" hit ", solitaire.money_made, "  again...")
@@ -48,6 +40,9 @@ for i in range(RUNS):
             print('---------------------------------------------------------------------------------------------------------------------------------------')
 
 
+    payout = solitaire.money_made
+    distribution[payout] += 1
+    total_payout += payout
     if payout >= 52:
         break_even += 1
 
@@ -66,6 +61,7 @@ print("Break-even %:", break_even_percent)
 print("Average payout:", avg_payout)
 print("Expected profit per game:", expected_profit)
 print("Distribution:", distribution)
+
 
 
 keys = list(distribution.keys())

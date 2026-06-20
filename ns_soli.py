@@ -260,7 +260,19 @@ class Solitaire:
                 # print(self.pile.foundation[ace_suit][0])
                 #return True
 
+            ##---NEW ADD----
+             # priority 2; regular card from waste ---> foundation
+            try:
+                if self.pile.waste and self.pile.foundation[self.pile.waste[-1].suit_value()] and self.check_card_for_foundation(self.pile.waste[-1]):
+                    card = self.pile.waste.pop()
+                    self.pile.foundation[card.suit_value()].append(card)
+                   
+                    # self.moves_made += 1
+                    # self.record_moves(f'[FROM WASTE], moved {card} into the {card.suit_value()} foundation pile')
 
+            except IndexError:
+                print('INDEX ERROR ', self.pile.foundation)
+                print('..and... ', card)
 
             #priority 2; King, check empty pile, -1 is top value
             key = self.check_empty_pile()
@@ -363,6 +375,31 @@ class Solitaire:
                 
         return False
         
+    def special_split_deck(self):
+        for start_pile in self.pile.piles:
+            for cur_pile in self.pile.piles:
+                if start_pile == cur_pile or not self.pile.piles[cur_pile]:
+                    continue
+
+                c_pile_selected_cards, c_index = self.select_cards(cur_pile)
+                cur_p_card_ls = list(c_pile_selected_cards)
+
+                frozen_sets = [frozenset(card.items()) for card in cur_p_card_ls]
+                card_tuple = tuple(frozen_sets)
+
+                # if card_tuple in self.seen and not self.seen[card_tuple]:
+                #     continue  # Skip this move, as it has been seen and determined to be invalid
+
+
+                if not self.pile.piles[start_pile] and len(self.pile.piles[cur_pile]) >= 2:
+                    move_to_start_pile = self.remove_cards(cur_pile, cur_p_card_ls)
+                    self.pile.piles[start_pile].extend(move_to_start_pile)
+                    self.flip_card(cur_pile)
+                    #self.seen[card_tuple] = False
+
+                    #-NEW ADDED--
+                    # self.moves_made += 1
+                    # self.record_moves(f'[!SPECIAL! SPLIT DECK], moved {cur_p_card_ls} from {self.make_nice_number(cur_pile)} pile to {self.make_nice_number(start_pile)} pile')
 
     def foundation_count(self):
         for suits in self.pile.foundation:
@@ -384,8 +421,9 @@ class Solitaire:
         foundation = self.pile_to_foundation()
         waste = self.waste_to_pile()
         split = self.split_deck()
+        special_split = self.special_split_deck()
 
-        if not (foundation or waste or split):
+        if not (foundation or waste or split or special_split):
             print('GAME OVER!!!!!!!!!!')
             print('here is how much money you made... ', self.foundation_count())
             print('END PILE  ', self.pile.piles)
@@ -404,7 +442,7 @@ class Solitaire:
 
 
 
-jj = Solitaire()
-jj.simulate()
+# jj = Solitaire()
+# jj.simulate()
 
 

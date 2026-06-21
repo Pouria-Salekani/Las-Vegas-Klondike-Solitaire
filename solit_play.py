@@ -23,11 +23,6 @@ class Solitaire:
         print('START PILE ', self.pile.piles, '\n')
         print('=========================================')
 
-        # ##uncomment when u wanna see all legal moves played of one game
-        # print('BEGINNING START!!!   ', self.pile.piles, '\n')
-
-   
- 
 
     # flip the [-1] card in the key-th pile
     def flip_card(self, key=None):
@@ -394,10 +389,7 @@ class Solitaire:
     
     def simulate(self):
         #called in order of priority
-        self.moves_made += 1
-        #self.record_moves(f'{self.pile.piles}')
-        
-
+        self.moves_made += 1        
         foundation = self.pile_to_foundation()
         waste = self.waste_to_pile()
         split = self.split_deck()
@@ -425,8 +417,6 @@ class Solitaire:
             print('----------------------------------------------------------------')
             print('Total moves made ', self.moves_made - 1)
             print('Total cards remaining (the higher, the worse)', len(self.pile.waste) + self.count_pile() + len(self.pile.stock))
-            #self.record_moves(f'FINAL {self.pile.piles}') this is the final pile but we already print it
-            #self.foundation_count()
             return
         
         else:

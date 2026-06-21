@@ -41,7 +41,7 @@ def start_game():
             print('---------------------------------------------------------------------------------------------------------------------------------------')
 
 
-        if money_made >= 52: #we made our money back
+        if money_made >= 55: #we made our money back
             break_even += 1
         if money_made == 260:
             wins += 1

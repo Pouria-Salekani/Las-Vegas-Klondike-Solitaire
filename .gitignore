@@ -3,6 +3,7 @@ __pycache__/
 *.pyc
 .vscode/
 
+ns_soli.py
 to_do.txt
 code_for_solit.txt
 v2.py
@@ -13,4 +14,3 @@ mcts.py
 node.py
 pre_mcts_code.py
 test_graph.py
-ns_soli.py

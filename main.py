@@ -1,3 +1,7 @@
+#====== A *WIN* is defined by placing ALL cards back into foundation (i.e. all 52 cards back)
+    # the 'distribution' is the number of cards played back into the foundation pile.
+    # Each card in a foundation pile is worth $5. So you, if you play ALL 52 cards back, you win $260 ======  #
+
 
 from piles import Pile
 from solit_play import Solitaire
@@ -9,14 +13,10 @@ wins = 0
 total_money = 0
 
 RUNS = 1    #----THIS IS THE NUMBER OF TIMES THE ENITRE GAME WILL BE RAN----
+            #----To see the moves of each play, keep RUNS = 1 and uncomment the moves code below----
+                #To see the *ACCURATE* win %, break-even %, and more, make RUNS = 3000 and COMMENT OUT the moves code below----
+                    #(the more # runs, the slower but accurate results)
 
-#====== A *WIN* is defined by placing ALL cards back into foundation (i.e. all 52 cards back)
-    # the 'distribution' is the $ value as keys. So, 10 cards played back: 5 * 10 = 50,
-    # all cards played back 5 * 52 = 260, break-even point 5 * 11 = 55 (11 cards played back) ======  #
-
-#===== A *WIN* is defined by placing ALL cards back into foundation (i.e. all 52 cards back)
-    # the 'distribution' has the number of cards played back onto the pile as its keys.
-    # In Las Vegas Klondike Solitaire, each card in the foundation pile is $5, so if all 52 cards played = 260 ==> a WIN ===== #
 def start_game():
     global total_money, break_even, wins
 
@@ -31,7 +31,7 @@ def start_game():
         total_money += money_made
 
 
-        #====UNCOMMENT TO SEE ALL MOVES PER RUN=====
+        ##====UNCOMMENT TO SEE ALL MOVES PER RUN=====##
         for k, v in solitaire.print_values.items():
             if i == 0:
                 print()

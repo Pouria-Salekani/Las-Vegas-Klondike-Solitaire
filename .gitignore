@@ -13,3 +13,4 @@ mcts.py
 node.py
 pre_mcts_code.py
 test_graph.py
+ns_soli.py

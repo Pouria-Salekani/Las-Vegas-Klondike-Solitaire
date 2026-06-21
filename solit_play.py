@@ -430,7 +430,6 @@ class Solitaire:
             return
         
         else:
-            print('STATUS OF THE FOUNDATION ', self.pile.pr_found())
             self.simulate()
 
 

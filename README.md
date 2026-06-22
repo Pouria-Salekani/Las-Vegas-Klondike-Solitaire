@@ -16,7 +16,7 @@ LVKS has an average win-rate of 10%. It displays a probability distribution grap
 - [What is a Win](#what-is-a-win)
   - [Buy-in](#buy-in)
 - [Example Output](#example-output)
-  - [Why Is There a Large Spike at 52?](#why-is-there-a-large-spike-at-52?) 
+  - [Why Is There a Large Spike at 52](#why-is-there-a-large-spike-at-52) 
      - [An Interesting Question](#an-interesting-question) 
 ---
 

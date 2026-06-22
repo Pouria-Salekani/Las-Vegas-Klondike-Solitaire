@@ -57,7 +57,7 @@ if __name__ == '__main__':
     print()
     print('=========== STATUS OF GAMES PLAYED ===========')
     print('Win %:', win_percent)
-    print('Break-even $:', break_even_percent)
+    print('Break-even %:', break_even_percent)
     print(f'Average payout in {RUNS} game(s):', avg_payout)
     print('Expected profit per game:', expected_profit)
     print(f'Distribution of money made across {RUNS} game(s):', {k//5:v for k,v in distribution.items()})

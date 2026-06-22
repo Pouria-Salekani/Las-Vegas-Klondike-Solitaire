@@ -105,7 +105,7 @@ As more cards are played onto the foundation pile, the possible game state decre
 
 #### An Interesting Question
 
-Now, an interesting question would be: is there a value, $\theta$, within [1,52] where after $\theta$ a win is _always_ guaranteed? It is obvious if $\theta = 50$ that means there are $2$ cards
+Now, an interesting question would be: is there a value, $\theta$, within [0,52] where after $\theta$ a win is _always_ guaranteed? It is obvious if $\theta = 50$ that means there are $2$ cards
 left to play, then obviously a win is going to be forced.
 
 This is indeed something to ponder about.
